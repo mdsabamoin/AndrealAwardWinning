@@ -1,0 +1,75 @@
+.award-container {
+  padding: 20px;
+}
+
+.sidebar-wrapper {
+  background: #003b80;
+  min-height: 100vh;
+  padding-top: 20px;
+  border-radius: 0 20px 20px 0;
+}
+
+.content-wrapper {
+  padding: 20px;
+}
+
+.award-box {
+  background: #ffffff;
+  margin-bottom: 40px;
+  border-radius: 20px;
+  box-shadow: 0 0 12px rgba(0, 0, 0, 0.1);
+}
+
+.award-header {
+  background: #003b80;
+  color: white;
+  padding: 15px 25px;
+  font-size: 24px;
+  font-weight: bold;
+  border-radius: 20px 20px 0 0;
+}
+
+.award-table thead {
+  background: #f1f6fc;
+}
+
+.award-table th {
+  color: #003b80;
+  font-weight: bold;
+  padding: 15px;
+}
+
+.award-table td {
+  padding: 15px;
+  font-size: 16px;
+}
+
+.award-name-link {
+  color: #0056c7;
+  cursor: pointer;
+}
+
+.pagination-section {
+  display: flex;
+  justify-content: space-between;
+  padding: 15px 25px;
+  align-items: center;
+}
+
+.rows-select {
+  width: 70px;
+  height: 32px;
+}
+
+.pagination-buttons button {
+  background: none;
+  border: none;
+  font-size: 18px;
+  margin-left: 10px;
+  cursor: pointer;
+}
+
+.pagination-buttons button:disabled {
+  opacity: 0.3;
+  cursor: not-allowed;
+}

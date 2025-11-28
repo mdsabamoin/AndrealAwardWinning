@@ -2,25 +2,43 @@ import React, { useEffect, useState } from "react";
 import axios from "axios";
 import Sidebar from "../components/Sidebar";
 import AwardTable from "../components/AwardTable";
+import SearchBar from "../components/SearchBar";
 import { Container, Row, Col } from "react-bootstrap";
 import "./Award.css";
 
 const AwardPresentation = () => {
   const [data, setData] = useState([]);
+  const [searchTerm, setSearchTerm] = useState("");
 
   useEffect(() => {
     axios
       .get("https://www.eepcindia.org/backend/api/new_award_presentation_test")
-      .then((res) => {
-        if (res.data.status) setData(res.data.data);
-      })
-      .catch((err) => console.log(err));
+      .then((res) => res.data.status && setData(res.data.data))
+      .catch(console.log);
   }, []);
 
-  const filterType = (type) => data.filter((item) => item.type === type);
+  const filteredData = data.filter((item) => {
+    if (!searchTerm.trim()) return true;
+
+    const search = searchTerm.toLowerCase();
+
+    return (
+      item.category?.toLowerCase().includes(search) ||
+      item.name?.toLowerCase().includes(search) ||
+      item.type?.toLowerCase().includes(search) ||
+      item.company?.toLowerCase().includes(search) ||
+      item.place?.toLowerCase().includes(search)
+    );
+  });
+
+  const filterType = (type) =>
+    filteredData.filter((item) => item.type === type);
 
   return (
     <Container fluid className="award-container">
+      {/* Search bar at top */}
+      <SearchBar searchTerm={searchTerm} setSearchTerm={setSearchTerm} />
+
       <Row>
         <Col
           md={3}

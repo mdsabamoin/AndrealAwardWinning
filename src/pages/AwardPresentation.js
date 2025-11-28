@@ -10,10 +10,38 @@ const AwardPresentation = () => {
   const [data, setData] = useState([]);
   const [searchTerm, setSearchTerm] = useState("");
 
+  // ⭐ Only added this function
+  const formatDate = (dateString) => {
+    if (!dateString) return "";
+
+    const date = new Date(dateString);
+    const day = date.getDate();
+    const month = date.toLocaleString("en-US", { month: "long" });
+    const year = date.getFullYear();
+
+    // Day suffix logic
+    const j = day % 10,
+      k = day % 100;
+    let suffix = "th";
+    if (j === 1 && k !== 11) suffix = "st";
+    else if (j === 2 && k !== 12) suffix = "nd";
+    else if (j === 3 && k !== 13) suffix = "rd";
+
+    return `${day}${suffix} ${month} ${year}`;
+  };
+
   useEffect(() => {
     axios
       .get("https://www.eepcindia.org/backend/api/new_award_presentation_test")
-      .then((res) => res.data.status && setData(res.data.data))
+      .then((res) => {
+        if (res.data.status) {
+          const updated = res.data.data.map((item) => ({
+            ...item,
+            date: formatDate(item.date), // ⭐ Only this line added
+          }));
+          setData(updated);
+        }
+      })
       .catch(console.log);
   }, []);
 
@@ -36,7 +64,6 @@ const AwardPresentation = () => {
 
   return (
     <Container fluid className="award-container">
-      {/* Search bar at top */}
       <SearchBar searchTerm={searchTerm} setSearchTerm={setSearchTerm} />
 
       <Row>
